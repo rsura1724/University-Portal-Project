@@ -1,0 +1,108 @@
+﻿@model System.Collections.Generic.List<UniversityApplicationPortal.Core.Models.Course>
+
+
+
+@{
+    ViewBag.Title = "DisplayCourses";
+
+}
+<style type="text/css">.js-cancel-course { }</style>
+
+<h2>Course Details</h2>
+
+  
+    <div >
+        <table class="table-striped" style="width: 100%; height: 100%;">
+            <tr>
+                <th>Course Name</th>
+                <th>Department</th>
+                <th>Edit Details</th>
+                <th>Delete Record</th>
+
+
+            </tr>
+            @foreach (var course in Model)
+            {
+                
+                <tr>
+                    <td>
+                        @course.CourseName
+                        @if (course.IsCanceled)
+                        {
+                            <span class="label label-warning">Canceled</span>
+                        }
+                    </td>
+
+
+
+
+                    <td>@course.Department.DepartmentName</td>
+                    <td> <button class="btn btn-success" type="button"  onclick="location.href = '@Url.Action("EditCourse", "Courses", new {id = course.Id})'">Edit</button></td>
+                    @*<td> <button class="btn btn-danger" type="button"  onclick= "location.href='@Url.Action("Delete", "Students",new{id = course.Id})'">Delete</button></td>*@
+                    <td> <a href="#" class="js-cancel-course" data-course-id="@course.Id">Cancel</a></td>
+                </tr>
+
+
+
+            }
+        </table>
+    </div>
+
+
+@section scripts{
+    <script>
+        $(document).ready(function() {
+            $(".js-cancel-course").click(function(e) {
+                var link = $(e.target);
+
+                var dialog = bootbox.dialog({
+                    title: 'Confirmation!!',
+                    message: "<p>Are you sure you want to cancel this course? </p>",
+                    buttons: {
+                        No: {
+                            label: "No",
+                            className: 'btn-default',
+                            callback: function() {
+                                bootbox.hideAll();
+                            }
+                        },
+                        Yes: {
+                            label: "Yes",
+                            className: 'btn-danger',
+                            callback: function () {
+                                $.ajax({
+                                        url: "/api/Courses/" + link.attr("data-course-id"),
+                                        method: "DELETE"
+                                    })
+                                    .done(function() {
+                                        link.parents("tr").fadeOut(function() {
+                                            $(this).remove();
+
+                                        });
+                                    })
+                                    .fail(function () {
+                                        debugger;
+                                        alert("Operation failed");
+
+                                    });
+
+                            }
+                        }
+                        
+                        
+                    }
+                });
+                
+
+
+
+
+
+               
+
+
+               
+            });
+        });
+    </script>
+}

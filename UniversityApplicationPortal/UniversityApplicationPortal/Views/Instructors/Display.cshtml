@@ -1,0 +1,46 @@
+﻿@model System.Collections.Generic.List<UniversityApplicationPortal.Core.Models.Instructor>
+    
+
+@{
+    ViewBag.Title = "DisplayInstructors";
+    
+}
+
+<h2>title</h2>
+
+<h2>Instructor Details</h2>
+
+<div >
+    <table class="table-striped" style="width: 100%; height: 100%;">
+        <tr>
+            <th>Instructor Name</th>
+            <th>Designation</th>
+
+            <th>Department</th>
+            <th>Edit Details</th>
+            <th>Delete Record</th>
+
+        </tr>
+        @foreach (var instructor in Model)
+        {
+            <tr>
+                <td>
+                    @instructor.InstructorName
+                </td>
+                <td>
+                    @instructor.Designation
+                </td>
+
+
+
+
+                <td>@instructor.Department.DepartmentName</td>
+               
+                <td> <button class="btn btn-success" type="button" data-target="#viewModal" data-toggle="modal" onclick="location.href='@Url.Action("EditInstructor", "Instructors",new{id = instructor.Id})'">Edit</button></td>
+                <td> <button class="btn btn-danger" type="button"  onclick= "location.href='@Url.Action("Delete", "Instructors",new{id = instructor.Id})'">Delete</button></td>
+            </tr>
+
+        }
+    </table>
+</div>
+

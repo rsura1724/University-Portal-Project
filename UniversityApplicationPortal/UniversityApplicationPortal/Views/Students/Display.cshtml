@@ -1,0 +1,42 @@
+﻿@model IEnumerable<UniversityApplicationPortal.Core.Models.Student>
+@{
+    ViewBag.Title = "DisplayStudents";
+}
+
+<h2>Student Details</h2>
+
+<div class="table-striped ">
+<table class="table-striped " style="width: 100%; height: 100%;" >
+    <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Mobile Number</th>
+        <th>Department</th>
+        <th>Edit Details</th>
+        <th>Delete Record</th>
+
+    </tr>
+    @foreach (var student in Model)
+    {
+        <tr>
+            <td>
+                @student.FirstName 
+            </td>
+                
+            <td>@student.LastName</td>
+                
+            <td>@student.MobileNumber</td>
+                
+                
+            <td>@student.Department.DepartmentName</td>
+            <td> <button class="btn btn-success" type="button"  onclick= "location.href='@Url.Action("EditStudent", "Students",new{id = student.Id})'">Edit</button></td>
+            <td> <button class="btn btn-danger" type="button"  onclick= "location.href='@Url.Action("Delete", "Students",new{id = student.Id})'">Delete</button></td>
+        </tr>
+
+    }
+</table>
+</div>
+    
+
+
+

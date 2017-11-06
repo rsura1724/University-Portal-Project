@@ -1,0 +1,56 @@
+﻿@model UniversityApplicationPortal.Core.ViewModels.InstructorFormViewModel
+@{
+    ViewBag.Title = "CreateInstructor";
+}
+
+<h2>CreateInstructor</h2>
+<button data-target="#viewModal" data-toggle="modal">test</button>
+
+<div class="modal" id="viewModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add Instructor</h4>
+            </div>
+            <div class="modal-body">
+                
+                @using (Html.BeginForm(Model.Action, "Instructors"))
+                {
+                    @Html.HiddenFor(m => m.Id)
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.InstructorName)
+                        @Html.TextBoxFor(m => m.InstructorName , new{@class="form-control"})
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Designation)
+                        @Html.TextBoxFor(m => m.Designation, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Department)
+                        @Html.DropDownListFor(m => m.Department, 
+                            new SelectList(Model.Departments, "Id", "DepartmentName"),
+                            "Select Department", new { @class = "form-control" })
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button class="btn btn-danger" data-dismiss="modal">Close</button>
+                }
+                
+
+
+            </div>
+            
+            @*<div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Save</button>
+                <button class="btn btn-danger" data-dismiss="modal">Close</button>
+
+            </div>*@
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
